@@ -7,6 +7,7 @@ class ToDo {
 }
 
 let toDoList = [];
+let trashList = [];
 
 window.onload = function() {
     
@@ -20,28 +21,59 @@ window.onload = function() {
     
     document.getElementById("addBtn").addEventListener('click', createTodo);
 
+    document.getElementById("myInput").addEventListener("keydown", function(e) {
+
+        if (e.key === 'Enter') {
+
+            e.preventDefault();
+
+            document.getElementById("addBtn").click();
+        }
+    });
+
+    document.getElementById("emptyBin");
+    let emptyTrashBtn = document.createElement("button");
+    emptyTrashBtn.type = "button";
+    emptyTrashBtn.id = "deleteTrashBtn";
+    emptyTrashBtn.innerHTML = "Empty Trashbin <i class='fas fa-trash'></i>";
+    emptyTrashBtn.addEventListener('click', deleteTrashList);
+    emptyBin.appendChild(emptyTrashBtn);
+
     generateToDoList();
+    generateTrashList();
 }
 
 function createTodo() {
 
-    let newToDo = document.getElementById("myInput").value;
+    let input = document.getElementById("myInput");
 
-    let toDo = new ToDo(newToDo, false, false);
+    let userInput = input.value;
 
-    toDoList.push(toDo);
+    let newToDo = new ToDo(userInput, false, false);
+
+    if (input.value == " ") {
+        alert("You must enter a Task!");
+        return false;
+    };
+
+    toDoList.push(newToDo);
 
     generateToDoList();
-    console.log(toDoList);
 }
 
 function generateToDoList() {
 
+    document.getElementById("myInput").value = " ";
+
     let container = document.getElementById("activeContainer");
     container.innerHTML = " ";
 
+    let heading = document.createElement("h4");
+    heading.innerHTML = "To do List";
+    heading.className = "containerHeadings";
+    container.appendChild(heading);
+
     let ulElement = document.createElement("ul");
-    ulElement.className = "defaultToDoList";
     container.appendChild(ulElement);
 
     for (let i = 0; i < toDoList.length; i++) {
@@ -55,22 +87,22 @@ function generateToDoList() {
                 liElement.className = "checked";
             }
 
-            let toDoTask = document.createElement("span");
-            toDoTask.className = "toDoSpan";
-            toDoTask.innerHTML = toDoList[i].name;
-            toDoTask.addEventListener('click', () => { checkToDo(toDoList[i]) });
+            let toDoName = document.createElement("span");
+            toDoName.className = "toDoSpan";
+            toDoName.innerHTML = toDoList[i].name;
+            toDoName.addEventListener('click', () => { checkToDo(toDoList[i]) });
             
-            let checkBtn = document.createElement("button");
-            checkBtn.type = "button";
-            checkBtn.className = "toDoButtons";
-            checkBtn.innerHTML = "<i class='fas fa-check'></i>";
-            checkBtn.addEventListener('click', () => { checkToDo(toDoList[i]) });
+            // let checkBtn = document.createElement("button");
+            // checkBtn.type = "button";
+            // checkBtn.className = "toDoButtons";
+            // checkBtn.innerHTML = "<i class='fas fa-check'></i>";
+            // checkBtn.addEventListener('click', () => { checkToDo(toDoList[i]) });
 
             let deleteBtn = document.createElement("button");
             deleteBtn.type = "button";
             deleteBtn.className = "toDoButtons";
             deleteBtn.innerHTML = "<i class='fas fa-trash'></i>";
-            deleteBtn.addEventListener('click', () => { deleteToDo(toDoList[i]) });
+            deleteBtn.addEventListener('click', () => { deleteTodo(toDoList[i]) });
 
             let orgBtn = document.createElement("button");
             orgBtn.type = "button";
@@ -78,72 +110,84 @@ function generateToDoList() {
             orgBtn.innerHTML = "<i class='fas fa-arrow-circle-up'></i>";
             orgBtn.addEventListener('click', () => { organizeToDo(toDoList[i]) });
             
-            liElement.appendChild(checkBtn);
-            liElement.appendChild(toDoTask);
+            //liElement.appendChild(checkBtn);
+            liElement.appendChild(toDoName);
             liElement.appendChild(orgBtn);
             liElement.appendChild(deleteBtn);
             ulElement.appendChild(liElement);
         }
     }
-    //console.log(toDoList);
 }
 
-function checkedToDoList() {
+function generateTrashList() {
 
     let container = document.getElementById("trashContainer");
     container.innerHTML = " ";
 
+    let heading = document.createElement("h4");
+    heading.innerHTML = "Deleted Tasks"
+    heading.className = "containerHeadings";
+    container.appendChild(heading);
+
     let ulElement = document.createElement("ul");
-    ulElement.className = "checkedToDoList";
     container.appendChild(ulElement);
 
-    for (let i = 0; i < toDoList.length; i++) {
+    for (let i = 0; i < trashList.length; i++) {
 
-        if ((toDoList[i].complete) == true) {
+        if ((trashList[i].complete) == true) {
 
             let liElement = document.createElement("li");
-            liElement.innerHTML = toDoList[i].name + " ";
+
+            let toDoName = document.createElement("span");
+            toDoName.className = "toDoSpan";
+            toDoName.innerHTML = trashList[i].name;
+            toDoName.addEventListener('click', () => { deleteTodo(trashList[i]) });
 
             let recycleBtn = document.createElement("button");
             recycleBtn.type = "button";
             recycleBtn.className = "toDoButtons";
             recycleBtn.innerHTML = "<i class='fas fa-recycle'></i>";
-            recycleBtn.addEventListener('click', () => { deleteToDo(toDoList[i]) });
+            recycleBtn.addEventListener('click', () => { deleteTodo(trashList[i]) });
 
+            liElement.appendChild(toDoName);
             liElement.appendChild(recycleBtn);
             ulElement.appendChild(liElement);
         }
     }
 }
 
-function deleteToDo(toDo) {
+function deleteTodo(toDo) {
 
     if (toDo.complete == false) { 
 
     toDo.complete = true;
 
+        if (toDo.complete == true)
+            for(let i = 0; i < toDoList.length; i++) {
+
+                if (toDoList[i] == toDo) {
+                toDoList.splice(i, 1,);
+                trashList.push(toDo);
+                } 
+            }
+    
     } else {
 
         toDo.complete = false;
-    }
-    //Experiment: lägg till recycled Task sist i array
-    if (toDo.complete == false) {
-        for(let i = 0; i < toDoList.length; i++) {
 
-            if (toDoList[i] == toDo) {
-            toDoList.splice(i, 1,);
-            toDoList.push(toDo);
-            } 
-        }
-        
+        if (toDo.complete == false)
+            for(let i = 0; i < trashList.length; i++) {
+
+                if (trashList[i] == toDo) {
+                trashList.splice(i, 1,);
+                toDoList.push(toDo);
+                } 
+            }
     }
+
     console.log(toDoList);
     generateToDoList();
-    checkedToDoList();
-}
-
-function recycleToDo(toDo) {
-    
+    generateTrashList();
 }
 
 function organizeToDo(toDo) {
@@ -151,7 +195,7 @@ function organizeToDo(toDo) {
     for(let i = 0; i < toDoList.length; i++) {
 
         if (toDoList[i] == toDo) {
-        toDoList.splice(i, 1,);
+        toDoList.splice(i, 1);
         toDoList.splice(0, 0, toDo);
         } 
     }   
@@ -169,4 +213,21 @@ function checkToDo(toDo) {
     }
 
     generateToDoList();
+}
+
+function deleteTrashList() {
+   
+    for(let i = 0; i <= trashList.length; i++) {
+
+        if (trashList == 0){
+            alert('You have nothing in trash');
+            return false;
+        }
+
+        if (trashList[i].complete == true) {
+            trashList.splice(trashList[i], trashList.length);
+        }
+    }
+
+    generateTrashList();
 }

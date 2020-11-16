@@ -80,32 +80,37 @@ body {
   }
 
 #displaySection {
-    display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
 }
 
-#activeContainer {
+#activeContainer, #trashContainer {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: #D6635A;
     border: 5px solid #FFAEA8;
     box-shadow: 5px 5px 25px #6d262174;
-    width: 45%;
-    height: 200px;
+    width: 100%;
+    margin-bottom: 20px;
     border-radius: 25px;
 }
 
-#trashContainer {
-    display: flex;
-    background-color: #D6635A;
-    border: 5px solid #FFAEA8;
-    box-shadow: 5px 5px 25px #6d262174;
-    width: 45%;
-    height: 200px;
-    border-radius: 25px;
+.containerHeadings {
+  width: 50%;
+  color: #FFCCC8;
+  background-color: #A83C34;
+  text-shadow:1px 1px 1px #FFAEA8;
+  font-size: 1.3rem;
+  text-align: center;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 3px solid #FF9289;
+  box-shadow: 5px 5px 10px #6d262174;
 }
 
 ul {
-    height: 100%;
     width: 100%;
     padding: 10px;
     list-style: none;
@@ -136,21 +141,24 @@ ul {
   }
   
   ul li.checked {
-    opacity: 0.4;
+    opacity: 0.5;
     color: white;
     text-decoration: line-through;
   }
 
   .toDoSpan {
       cursor: pointer;
+      width: 60%;
+      padding-left: 10px;
   }
 
   .toDoButtons {
+    justify-self: flex-end;
+    width: 20%;
     border: none;
     color: #A83C34;
     background-color: inherit;
     text-shadow:1px 1px 1px #D6635A;
-    text-decoration: none;
     cursor: pointer;
     font-size: 1.1rem;
     transition: .2s;
@@ -160,3 +168,33 @@ ul {
     color: white;
   }
 
+  #emptyBin {
+    display: flex;
+    justify-content: center;
+    
+  }
+
+  #deleteTrashBtn {
+    border: none;
+    color: #A83C34;
+    background-color: #FFAEA8;
+    text-shadow:1px 1px 1px #D6635A;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 10px;
+    transition: .2s;
+    border-radius: 25px;
+    border: 3px solid #D6635A;
+    box-shadow: 5px 5px 10px #6d262174;
+  }
+
+  #deleteTrashBtn:hover {
+    cursor: pointer;
+    background-color: #D6635A;
+    color: #FFAEA8;
+    border: 3px solid #FFAEA8;
+    outline: none;
+    text-decoration: none;
+
+  }
