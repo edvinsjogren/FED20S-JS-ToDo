@@ -1,0 +1,42 @@
+@mixin transition($time) {
+    -webkit-transition: ($time);
+    -o-transition: ($time);
+    -ms-transition: ($time);
+    -moz-transition: ($time);
+    transition: ($time);
+}
+
+@mixin flexCenter($direction) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+}
+
+@mixin shadows($color, $color2) {
+    text-shadow: 1px 1px 1px $color;
+    box-shadow: 5px 5px 10px $color2;
+}
+
+@mixin bigBtn($width, $height) {
+    @include flexCenter(column);
+    width: $width;
+    height: $height;
+    border: 3px solid $cherry;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    background: $rose;
+    color: $cherry;
+    @include shadows($cherry, $cherry);
+    @include transition(.2s);
+    cursor: pointer;
+    outline: none;
+
+        &:hover {
+        background-color: $cherry;
+        color: $flamingo;
+        border: 10px double $rose;
+        @include shadows($pink, none);
+
+        }
+}

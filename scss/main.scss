@@ -1,0 +1,21 @@
+@import 'header';
+@import 'display';
+@import 'mixins';
+@import 'variables';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+    @media screen and(min-width: 769px) {
+        font-size: 1.3rem;
+    }
+}
+
+body {
+    background-color: $flamingo;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+
+}
