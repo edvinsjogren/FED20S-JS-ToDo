@@ -15,6 +15,8 @@ Make a new folder.
 
 Run git clone https://github.com/edvinsjogren/Eddie-sTidyToDoList.git in your terminal
 
+Install npm/run npm init
+
 Start index.html
 
 ## Project structure
