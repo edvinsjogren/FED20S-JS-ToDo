@@ -1,5 +1,5 @@
 # Eddie's Tidy "To Do List" Generator
-An assignment as part of the Java-script 101 course, Front End Development program, at Medieinstutet, Stockholm, Sweden. Focusing on creating interactive *arrays, objects* and *classes* using *functions, for loops, events* as well as applying *LocalStorage*. 
+An assignment as part of the JavaScript 101 course, Front End Development program, at Medieinstutet, Stockholm, Sweden. Focusing on creating interactive *arrays, objects* and *classes* using *functions, for loops, events* as well as applying *LocalStorage*. 
 
 ## Description
 Use the input field to enter a task to the *Todo-list *(max 50 letters), either by clicking the **addbutton** or by pressing **enter** on your keyboard.
